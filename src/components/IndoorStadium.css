@@ -1,0 +1,48 @@
+.indoor-stadium-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.indoor-stadium-info {
+    margin-top: 20px;
+    color: #1cd8d8; /* Set font color to white */
+}
+
+.indoor-stadium-info img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgb(255, 255, 255);
+}
+
+.indoor-stadium-info h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+.indoor-stadium-info ul {
+    list-style-type: disc;
+    margin-left: 20px;
+    text-align: left;
+}
+
+.indoor-stadium-info li {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.indoor-stadium-info p {
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+.indoor-stadium-info p:first-of-type {
+    margin-top: 0;
+}
+
+.indoor-stadium-info p:last-of-type {
+    margin-bottom: 0;
+}

@@ -1,0 +1,40 @@
+/* styles.css */
+.student-reports-table {
+    margin-top: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.student-reports-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.student-reports-table th, .student-reports-table td {
+    padding: 12px;
+    text-align: center;
+}
+
+.student-reports-table th {
+    background-color: #333;
+    color: #fff;
+    font-weight: bold;
+}
+
+.student-reports-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.student-reports-table tbody tr:hover {
+    background-color: #ddd;
+    transition: background-color 0.3s ease;
+}
+
+.student-reports-table tbody tr td:first-child {
+    text-align: left;
+}
+
+.student-reports-table tbody tr:last-child {
+    border-bottom: 2px solid #333;
+}
