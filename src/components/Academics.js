@@ -1,7 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import '../Academics.css';
+import Navbar from './Navbar';
 const Academics = () => {
     return (
+        <>
+        <Navbar/>
         <div className="container">
             <h1 className="my-4 h1-ubuntu h1-border">Academics</h1>
 
@@ -169,6 +173,7 @@ const Academics = () => {
             </div>
             
         </div>
+        </>
         
     );
 };

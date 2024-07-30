@@ -1,0 +1,39 @@
+/* Navigation Button Container */
+.navigation-button-container {
+    text-align: center;
+    margin-top: 40px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.navigation-button-container:hover {
+    transform: translateY(-5px);
+}
+
+.navigation-button-container p {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+/* Button */
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #0967f5, #f9fcff);
+    color: #2e2d2d;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: 0.3s ease, transform 0.3s ease;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.btn:hover {
+    background: linear-gradient(135deg, #0056b3, #007bff);
+    transform: translateY(-2px);
+}
+

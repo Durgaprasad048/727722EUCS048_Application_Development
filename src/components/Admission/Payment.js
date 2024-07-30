@@ -76,7 +76,7 @@ const PaymentPage = () => {
                         <button type="submit" className="btn btn-primary position-relative" style={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                             Proceed to Pay
                             {isSubmitting && (
-                                <img src="https://cdn.dribbble.com/users/1751799/screenshots/5512482/check02.gif" alt="Loading" style={{ width: '50px', height: '50px', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }} />
+                                <img src="https://cdn.dribbble.com/users/1751799/screenshots/5512482/check02.gif" alt="Loading" style={{ width: '600px', height: '600px', position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }} />
                             )}
                         </button>
                     </center>

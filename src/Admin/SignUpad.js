@@ -1,17 +1,13 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import '../SignUp.css';
+import './SignUpad.css';
 
-const SignUp = () => {
+const SignUpad = () => {
   const navigate = useNavigate();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-
-  const goToLogin = () => {
-    navigate('/Login');
-  };
 
   const validatePassword = (password) => {
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -26,7 +22,7 @@ const SignUp = () => {
         console.log('Name:', name);
         console.log('Email:', email);
         console.log('Password:', password);
-        navigate('/Home');
+        navigate('/AdminSignUp');
       } else {
         alert(
           'Password must have one uppercase letter, one lowercase letter, one number, one symbol, and be at least 8 characters long.'
@@ -38,16 +34,15 @@ const SignUp = () => {
   };
 
   return (
-    <div className="loginsignup">
-      <div className="login-signup-container">
-      <h1>Welcome</h1>
-      <p className="loginsignup-">
-          Are you a admin? <Link to="/admin-signup"><span>Register here</span></Link>
+    <div className="admin-signup">
+      <div className="admin-signup-container">
+        <h1>Admin Portal</h1>
+        <p className="admin-signup-question">
+          Are you an admin? <Link to="/admin-login"><span>Login here</span></Link>
         </p>
-        <p id="para"></p>
-        <div className="loginsignup-fields">
+        <div className="admin-signup-fields">
           <input type="text" placeholder="Your Name" value={name} onChange={(e) => setName(e.target.value)} />
-          <input type="email" placeholder="Email Address" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <input type="email" placeholder="Admin Email Address" value={email} onChange={(e) => setEmail(e.target.value)} />
           <input type="password" placeholder="New Password" value={password} onChange={(e) => setPassword(e.target.value)} />
           <input
             type="password"
@@ -56,18 +51,14 @@ const SignUp = () => {
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </div>
-        <div className="loginsignup-agree">
+        <div className="admin-signup-agree">
           <input type="checkbox" name="" id="" />
           <p>By continuing, I agree to the terms of use & privacy policy</p>
         </div>
         <button onClick={handleSignUp}>SignUp</button>
-        <p>Or</p>
-        <button onClick={goToLogin}>Login</button>
-        
-       
       </div>
     </div>
   );
 };
 
-export default SignUp;
+export default SignUpad;

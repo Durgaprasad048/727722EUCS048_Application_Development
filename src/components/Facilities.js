@@ -30,6 +30,7 @@ const College = () => {
   }
 
   return (
+    
     <div className="gallery-container">
         
         <div className="fd" id='1'>

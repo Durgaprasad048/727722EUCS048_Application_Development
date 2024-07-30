@@ -29,6 +29,16 @@ import { useState, useEffect } from 'react';
 import ScrollToTop from "react-scroll-to-top";
 import Login from "./components/LoginPage/Login";
 import SignUp from "./components/LoginPage/SignUp";
+import Profile from "./components/Profile";
+import Dashboard from "./components/Dashboard";
+import AdminLogin from "./Admin/AdminLogin";
+import SignUpad from "./Admin/SignUpad";
+import Homead from "./Admin/Homead";
+import ResponseManagement from "./Admin/InquiriesManagement";
+import InquiryAssignment from "./Admin/InquiryAssignment";
+import PrioritySetting from "./Admin/PrioritySetting";
+import AdminDashboard from "./Admin/AdminDash";
+import StatusTracking from "./StausTracking";
 
 
 function App() {
@@ -50,9 +60,13 @@ function App() {
       :
       <Router>
          <ScrollToTop smooth />
-        <Navbar />
+        
         <Routes>
-          <Route path='/' element={<Home />} />
+          
+          <Route path='/Home' element={<Home/>} />
+          <Route path='/SignUp' element={<SignUp/>} />
+          <Route path='/' element={<SignUp />} />
+          <Route path='/nav' element={<Navbar/>}/>
           <Route path='/mechanicaldepartment' element={<MechanicalDepartment />} />
           <Route path='/electricaldepartment' element={<ElectricalDepartment/>} />
           <Route path='/computerdepartment' element={<ComputerDepartment/>} />
@@ -61,7 +75,7 @@ function App() {
           <Route path='/admissionform' element={<AdmissionForm/>} />
           <Route path='/fees' element={<Fees />} />
           <Route path='/payment' element={<PaymentPage/>} />
-          <Route path='/academics' element={<Academics/>} />
+          <Route path='/Home/academics' element={<Academics/>} />
           <Route path='/rules' element={<Rules />} />
           <Route path='/facilities' element={<Facilities/>} />
           <Route path='/about' element={<About/>} />   
@@ -73,10 +87,21 @@ function App() {
           <Route path='/placement' element={<PlacementPage/>}/>
           <Route path='/contact' element={<Contact />} />
           <Route path='/Lab' element={<Lab/>} />
-          <Route path='/Login' element={<Login/>} />
-          <Route path='/SignUp' element={<SignUp/>} />
+          <Route path='/footer' element={<Footer/>} />
+          <Route path='/login' element={<Login/>} />
+          <Route path='/Profile' element={<Profile/>}/>
+          <Route path='/Dashboard' element={<Dashboard/>}/>
+          <Route path='/admin-login' element={<AdminLogin/>}/>
+          <Route path='/admin-signup' element={<SignUpad/>}/>
+          <Route path='/Homead' element={<Homead/>}/>
+          <Route path='/adminresponse' element={<ResponseManagement/>}/>
+          <Route path='/adminassignment' element={<InquiryAssignment/>}/>
+          <Route path='/adminsetting' element={<PrioritySetting/>}/>
+          <Route path='/AdminDashboard' element={<AdminDashboard/>}/>
+          <Route path='/StatusTracking' element={<StatusTracking/>}/>
+       
         </Routes>
-        <Footer />
+        
       </Router>
     }
     </>

@@ -1,0 +1,68 @@
+/* Main Header */
+.main-head {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+}
+
+.main-head img {
+    margin-right: 20px;
+}
+
+.main-heading {
+    font-size: 30px;
+    font-weight: bolder;
+    color: #333;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #343a40; /* Dark background for navbar */
+}
+
+.navbar-toggler {
+    border: none;
+}
+
+.navbar-toggler-icon {
+    background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"%3E%3Cpath stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7"%3E%3C/path%3E%3C/svg%3E');
+}
+
+.nav-link {
+    font-size: 16px;
+    color: #fff; /* Ensures the link color is white */
+}
+
+.nav-link:hover {
+    text-decoration: underline; /* Changed to underline for a clearer hover effect */
+}
+
+/* Spacing between navbar items */
+.navbar-nav .nav-item {
+    margin-right: 15px; /* Adjust this value for more or less space */
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    background-color: #343a40; /* Match the navbar background */
+}
+
+.dropdown-item {
+    color: #fff;
+}
+
+.dropdown-item:hover {
+    background-color: #495057;
+}
+
+/* Centering the logout link */
+.navbar-nav.ms-auto .nav-item {
+    margin-left: auto; /* This will push it to the far right */
+}
+
+
+

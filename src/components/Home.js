@@ -1,25 +1,33 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+// import logo from './loh.png';
+import Navbar from './Navbar';
+import Footer from './Footer';
+import '../Home.css';
+
 
 const Home = () => {
     document.title = "National College of Technology";
 
     return (
         <>
+            <Navbar/>
+            
             <div className="container">
+            
                 <div id="carouselExampleControls" className="carousel slide" data-bs-ride="carousel">
                     <div className="carousel-inner">
                         <div className="carousel-item active">
                             <img src='https://wallpapercave.com/wp/wp2468660.jpg' className="d-block w-100" alt="Loading" />
                         </div>
                         <div className="carousel-item">
-                            <img src='https://en.idei.club/uploads/posts/2023-06/1686084469_en-idei-club-p-indian-college-students-dizain-instagram-2.jpg' className="d-block w-100" alt="Loading" />
+                            <img src='https://i.pinimg.com/564x/93/79/d2/9379d261dfd39d582b0dc96a09f8a324.jpg' className="d-block w-100" alt="Loading" />
                         </div>
-                        {/* <div className="carousel-item">
-                            <img src='https://shakuntaladevidedcollege.com/images/playg.jpg' className="d-block w-100" alt="Loading" />
-                        </div> */}
                         <div className="carousel-item">
-                            <img src='https://www.etsu.edu/students/univcent/pictures/auditorium2.jpg' className="d-block w-100" alt="Loading" />
+                            <img src='https://i.pinimg.com/564x/25/a4/12/25a412dceef697c9763234f49899ba77.jpg' className="d-block w-100" alt="Loading" />
+                        </div>
+                        <div className="carousel-item">
+                            <img src='https://i.pinimg.com/564x/2b/09/97/2b0997961ff2f09aab18ac4c8c6dab02.jpg' className="d-block w-100" alt="Loading" />
                         </div>
                         <div className="carousel-item">
                             <img src='https://itechindia.co/wp-content/uploads/2021/11/Blog-Image-1.jpeg' className="d-block w-100" alt="Loading" />
@@ -38,11 +46,10 @@ const Home = () => {
                     </button>
                 </div>
             </div>
-
-
+            
             <div className='main-container'>
                 <div className=" home-container">
-                    <h2 className='my-4 home-heading text-center'>Welcome To National college of Technology</h2>
+                    <h2 className='my-4 home-heading text-center'  to="academics">Welcome</h2>
                     <p>National College of Technology  is situated in chennai TamilNadu. National College of Technology   is under Anna University. Location of NEC is Anna Nagar Chennai TamilNadu</p>
                     <b>Institute Type: Private </b>
                     <p>Private college is leading educational organisation in india. Teaching facualty of Private ITI is suprimo. ITI is providing latest Job oriented course for student. This Private ITI is powerd by <b>'Ministry of Skill Development and Entrepreneurship, Government of India for Craftsmen Training Scheme.</b> ITI is registered by government under<b>NCVT.</b></p>
@@ -86,6 +93,7 @@ const Home = () => {
                 <p>For more information about our college, visit the About page:</p>
                 <Link to="/About" className="btn btn-primary">About </Link>
             </div>
+            <Footer/>
         </>
     )
 }
