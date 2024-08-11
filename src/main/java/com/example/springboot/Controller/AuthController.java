@@ -1,27 +1,53 @@
-// package com.example.springboot.Controller;
+package com.example.springboot.Controller;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-// import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.http.ResponseEntity;
-// import org.springframework.web.bind.annotation.*;
-// import org.springframework.web.context.request.async.AsyncWebRequest;
+import com.example.springboot.Entity.RefreshToken;
+import com.example.springboot.Entity.User;
+import com.example.springboot.Service.AuthService;
+import com.example.springboot.Service.JwtService;
+import com.example.springboot.Service.RefreshTokenService;
+import com.example.springboot.Utils.AuthResponse;
+import com.example.springboot.Utils.LoginRequest;
+import com.example.springboot.Utils.RefreshTokenRequest;
+import com.example.springboot.Utils.RegisterRequest;
+@RestController
+@RequestMapping("/api/users")
+@CrossOrigin(origins = "*")
+public class AuthController {
+    private final AuthService authService;
+    private final RefreshTokenService refreshTokenService;
+    private final JwtService jwtService;
+    public AuthController(AuthService authService, RefreshTokenService refreshTokenService, JwtService jwtService) {
+        this.authService = authService;
+        this.refreshTokenService = refreshTokenService;
+        this.jwtService = jwtService;
+    }
 
-// import com.example.springboot.Service.AdminService;
+    @PostMapping("/register")
+    public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest registerRequest) {
+        return ResponseEntity.ok(authService.register(registerRequest));
+    }
 
-// @RestController
-// @RequestMapping("/api/auth")
-// @CrossOrigin(origins = "http://localhost:3000")  // Adjust as needed
-// public class AuthController {
-    
-//     @Autowired
-//     private AdminService authService;
+    @PostMapping("/login")
+    public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest loginRequest) {
+        return ResponseEntity.ok(authService.login(loginRequest));
+    }
 
-//     @PostMapping("/login")
-//     public ResponseEntity<?> login(@RequestBody AsyncWebRequest authRequest) {
-//         boolean isAuthenticated = authService.authenticate(authRequest.getEmail(), authRequest.getPassword());
-//         if (isAuthenticated) {
-//             return ResponseEntity.ok().body("Login successful");
-//         } else {
-//             return ResponseEntity.status(401).body("Invalid credentials");
-//         }
-//     }
-// }
+    @PostMapping("/refresh")
+    public ResponseEntity<AuthResponse> refreshToken(@RequestBody RefreshTokenRequest refreshTokenRequest) {
+        RefreshToken refreshToken = refreshTokenService.verifyRefreshToken(refreshTokenRequest.getRefreshToken());
+        User user = refreshToken.getUser();
+
+        String accessToken = jwtService.generateToken(user);
+
+        return ResponseEntity.ok(AuthResponse.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken.getRefreshToken())
+                .build());
+    }
+}
