@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../Admin/InquiriesManagement';
+import './ResponseManagement.css';
 
 const ResponseManagement = () => {
     const [inquiries, setInquiries] = useState([]);
@@ -117,7 +117,7 @@ const ResponseManagement = () => {
             <table className="response-management-table">
                 <thead>
                     <tr>
-                        <th className="response-management-table-header">ID</th>
+                        {/* <th className="response-management-table-header">ID</th> */}
                         <th className="response-management-table-header">Name</th>
                         <th className="response-management-table-header">Subject</th>
                         <th className="response-management-table-header">Status</th>
@@ -130,7 +130,7 @@ const ResponseManagement = () => {
                         .filter(inquiry => inquiry.name.toLowerCase().includes(searchTerm.toLowerCase()))
                         .map((inquiry) => (
                             <tr key={inquiry.id}>
-                                <td className="response-management-table-cell">{inquiry.id}</td>
+                                {/* <td className="response-management-table-cell">{inquiry.id}</td> */}
                                 <td className="response-management-table-cell">{inquiry.name}</td>
                                 <td className="response-management-table-cell">{inquiry.subject}</td>
                                 <td className="response-management-table-cell">{inquiry.status}</td>

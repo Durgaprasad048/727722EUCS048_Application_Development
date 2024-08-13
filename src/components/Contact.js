@@ -34,19 +34,22 @@ const InquirySubmission = () => {
     data.append('email', formData.email);
     data.append('subject', formData.subject);
     data.append('message', formData.message);
+    
     if (formData.attachment) {
       data.append('attachment', formData.attachment);
     }
 
     try {
-      await axios.post('http://localhost:8080/api/inquiries', data, {
+      const response = await axios.post('http://localhost:8080/api/inquiries', data, {
         headers: {
-          'Content-Type': 'application.json'
+          'Content-Type': 'multipart/form-data'
         }
       });
+      console.log('Response:', response);  // Log response for debugging
       showResult(true);
       setError(null);
     } catch (err) {
+      console.error('Error:', err);  // Log error for debugging
       setError('Failed to submit inquiry.');
       showResult(false);
     }

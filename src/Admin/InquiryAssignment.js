@@ -34,20 +34,22 @@ const InquiryAssignment = () => {
     const handleFormSubmit = (e) => {
         e.preventDefault();
         if (selectedInquiry) {
-            axios.put(`/api/inquiries/${selectedInquiry.id}/assign`, { assignedTo: form.assignedTo })
-                .then(response => {
-                    setInquiries(inquiries.map(inquiry =>
-                        inquiry.id === selectedInquiry.id ? { ...inquiry, assignedTo: response.data.assignedTo } : inquiry
-                    ));
-                    setForm({ assignedTo: '' });
-                    setSelectedInquiry(null);
-                })
-                .catch(error => console.error('Error assigning inquiry:', error));
+            axios.put(`http://localhost:8080/api/inquiries/${selectedInquiry.id}/assign`, {
+                staffName: form.assignedTo
+            })
+            .then(response => {
+                setInquiries(inquiries.map(inquiry =>
+                    inquiry.id === selectedInquiry.id ? { ...inquiry, staffName: response.data.staffName } : inquiry
+                ));
+                setForm({ assignedTo: '' });
+                setSelectedInquiry(null);
+            })
+            .catch(error => console.error('Error assigning inquiry:', error));
         }
     };
 
     const handleEdit = (inquiry) => {
-        setForm({ assignedTo: inquiry.assignedTo });
+        setForm({ assignedTo: inquiry.staffName || '' });
         setSelectedInquiry(inquiry);
     };
 
@@ -66,9 +68,10 @@ const InquiryAssignment = () => {
             <table className="inquiry-table">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        {/* <th>ID</th> */}
                         <th>Name</th>
-                        <th>Inquiry</th>
+                        <th>Subject</th>
+                        <th>Message</th>
                         <th>Date</th>
                         <th>Assigned To</th>
                         <th>Actions</th>
@@ -79,11 +82,12 @@ const InquiryAssignment = () => {
                         .filter(inquiry => inquiry.name.toLowerCase().includes(searchTerm.toLowerCase()))
                         .map((inquiry) => (
                             <tr key={inquiry.id}>
-                                <td>{inquiry.id}</td>
+                                {/* <td>{inquiry.id}</td> */}
                                 <td>{inquiry.name}</td>
-                                <td>{inquiry.inquiry}</td>
-                                <td>{inquiry.date}</td>
-                                <td>{inquiry.assignedTo || 'Not Assigned'}</td>
+                                <td>{inquiry.subject}</td>
+                                <td>{inquiry.message}</td>
+                                <td>{new Date(inquiry.createdDate).toLocaleDateString()}</td>
+                                <td>{inquiry.staffName || 'Not Assigned'}</td>
                                 <td>
                                     <button onClick={() => handleEdit(inquiry)} className="edit-button">Assign</button>
                                 </td>

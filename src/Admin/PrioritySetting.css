@@ -1,116 +1,74 @@
-
-
-.priority-setting-container {
+.admin-inquiry-response-management-container {
     padding: 20px;
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f7f9;
+    font-family: Arial, sans-serif;
 }
 
-h1, h2 {
-    color: #333;
+.admin-inquiry-response-management-title {
+    font-size: 24px;
     margin-bottom: 20px;
-    text-align: center;
 }
 
-.search-input {
-    margin-bottom: 20px;
+.admin-inquiry-response-management-search-input {
     padding: 10px;
-    width: 100%;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-.table-container {
     margin-bottom: 20px;
-    overflow-x: auto;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-.inquiry-table {
+.admin-inquiry-response-management-table {
     width: 100%;
     border-collapse: collapse;
-    background-color: #fff;
-    border-radius: 4px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
 }
 
-thead {
-    background-color: #007bff;
-    color: white;
-}
-
-th, td {
-    padding: 12px;
+.admin-inquiry-response-management-table th,
+.admin-inquiry-response-management-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
     text-align: left;
-    border-bottom: 1px solid #ddd;
 }
 
-tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-.edit-button {
-    background-color: #28a745;
-    color: white;
-    padding: 10px 15px;
+.admin-inquiry-response-management-edit-button,
+.admin-inquiry-response-management-delete-button {
+    padding: 5px 10px;
     border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-right: 10px;
-}
-
-.delete-button {
-    background-color: #dc3545;
     color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
     cursor: pointer;
 }
 
-.edit-button:hover {
-    background-color: #218838;
+.admin-inquiry-response-management-edit-button {
+    background-color: #4CAF50; /* Green */
 }
 
-.delete-button:hover {
-    background-color: #c82333;
+.admin-inquiry-response-management-delete-button {
+    background-color: #f44336; /* Red */
 }
 
-.form-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.admin-inquiry-response-management-form-container {
+    margin-top: 20px;
 }
 
-.form-container label {
-    display: block;
-    width: 100%;
+.admin-inquiry-response-management-form-title {
+    font-size: 20px;
     margin-bottom: 10px;
 }
 
-.form-container input[type="text"], .form-container textarea, .form-container select, .form-container input[type="date"] {
-    width: calc(100% - 22px);
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+.admin-inquiry-response-management-form label {
+    display: block;
+    margin-bottom: 10px;
 }
 
-.form-container input[type="text"]:focus, .form-container textarea:focus, .form-container select:focus, .form-container input[type="date"]:focus {
-    border-color: #007bff;
-    outline: none;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+.admin-inquiry-response-management-form input,
+.admin-inquiry-response-management-form textarea {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
 }
 
-.submit-button {
-    padding: 10px 15px;
+.admin-inquiry-response-management-form button {
+    padding: 10px 20px;
     border: none;
-    border-radius: 4px;
-    background-color: #007bff;
+    background-color: #007BFF;
     color: white;
     cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.submit-button:hover {
-    background-color: #0056b3;
 }

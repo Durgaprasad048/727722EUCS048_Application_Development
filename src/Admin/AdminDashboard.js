@@ -8,6 +8,7 @@ const AdminDashboard = () => {
     const [staffName, setStaffName] = useState('');
     const [priority, setPriority] = useState('');
     const [status, setStatus] = useState('');
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         fetchInquiries();
@@ -20,6 +21,10 @@ const AdminDashboard = () => {
         } catch (error) {
             console.error('Error fetching inquiries:', error);
         }
+    };
+
+    const handleSearch = (e) => {
+        setSearchTerm(e.target.value);
     };
 
     const handleAssignStaff = async () => {
@@ -89,15 +94,34 @@ const AdminDashboard = () => {
         }
     };
 
+    const filteredInquiries = inquiries.filter(inquiry =>
+        inquiry.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        inquiry.subject.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        inquiry.message.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     return (
         <div className="admin-container mt-4">
             <h1 className="admin-text-center mb-4">Admin Dashboard</h1>
+            
+            <div className="admin-row mb-4">
+                <div className="admin-col-md-12">
+                    <input
+                        type="text"
+                        placeholder="Search inquiries..."
+                        value={searchTerm}
+                        onChange={handleSearch}
+                        className="search-input"
+                    />
+                </div>
+            </div>
+            
             <div className="admin-row">
                 <div className="admin-col-md-12">
                     <table className="admin-table admin-table-bordered">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                {/* <th>ID</th> */}
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Subject</th>
@@ -109,9 +133,9 @@ const AdminDashboard = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {inquiries.map((inquiry) => (
+                            {filteredInquiries.map((inquiry) => (
                                 <tr key={inquiry.id}>
-                                    <td>{inquiry.id}</td>
+                                    {/* <td>{inquiry.id}</td> */}
                                     <td>{inquiry.name}</td>
                                     <td>{inquiry.email}</td>
                                     <td>{inquiry.subject}</td>
