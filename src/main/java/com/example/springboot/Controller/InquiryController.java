@@ -1,5 +1,6 @@
 package com.example.springboot.Controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +26,11 @@ public class InquiryController {
         List<Inquiry> inquiries = inquiryService.getAllInquiries();
         return ResponseEntity.ok(inquiries);
     }
+    @GetMapping("/status")
+    public ResponseEntity<List<Inquiry>> getAllInquiriesWithStatus() {
+        List<Inquiry> inquiries = inquiryService.getAllInquiries();
+        return ResponseEntity.ok(inquiries);
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Inquiry> getInquiryById(@PathVariable Long id) {
@@ -42,24 +48,32 @@ public class InquiryController {
             @RequestParam(value = "attachment", required = false) MultipartFile attachment) {
         
         Inquiry inquiry = new Inquiry(name, email, subject, message);
+        
+        if (attachment != null && !attachment.isEmpty()) {
+            try {
+                inquiry.setAttachment(attachment.getBytes());
+            } catch (IOException e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error while processing attachment");
+            }
+        }
+        
         inquiryService.saveInquiry(inquiry);
-
         return ResponseEntity.ok("Inquiry submitted successfully!");
     }
 
     @PutMapping("/{id}/assign")
-    public ResponseEntity<String> assignStaff(
+    public ResponseEntity<Inquiry> assignStaff(
             @PathVariable Long id, 
-            @RequestParam String staffName) {
+            @RequestBody StaffAssignmentRequest request) {
         
         Optional<Inquiry> inquiryOpt = inquiryService.getInquiryById(id);
         if (inquiryOpt.isPresent()) {
             Inquiry inquiry = inquiryOpt.get();
-            inquiry.setStaffName(staffName);
+            inquiry.setStaffName(request.getStaffName());
             inquiryService.saveInquiry(inquiry);
-            return ResponseEntity.ok("Staff assigned successfully!");
+            return ResponseEntity.ok(inquiry);
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Inquiry not found");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
 
     @PutMapping("/{id}/priority")

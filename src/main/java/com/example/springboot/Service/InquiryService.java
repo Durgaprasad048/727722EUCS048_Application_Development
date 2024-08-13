@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import com.example.springboot.Entity.Inquiry;
 import com.example.springboot.Repository.InquiryRepository;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,5 +31,20 @@ public class InquiryService {
 
     public void deleteInquiry(Long id) {
         inquiryRepository.deleteById(id);
+    }
+
+    public void addResponse(Long id, String response, Date responseDate) {
+        Optional<Inquiry> inquiryOpt = inquiryRepository.findById(id);
+        if (inquiryOpt.isPresent()) {
+            Inquiry inquiry = inquiryOpt.get();
+            inquiry.setResponse(response);
+            inquiry.setResponseDate(formatDate(responseDate));
+            inquiryRepository.save(inquiry);
+        }
+    }
+
+    private String formatDate(Date date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(date);
     }
 }
