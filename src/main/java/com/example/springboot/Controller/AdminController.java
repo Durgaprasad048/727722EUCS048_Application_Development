@@ -1,19 +1,31 @@
 package com.example.springboot.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import com.example.springboot.Entity.Admin;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.springboot.Dto.SignupRequest;
 import com.example.springboot.Service.AdminService;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/admins")
-@CrossOrigin(origins = "http://localhost:3000") // Adjust the origin as per your frontend's URL
 public class AdminController {
+
     @Autowired
     private AdminService adminService;
 
     @PostMapping("/signup")
-    public Admin registerAdmin(@RequestBody Admin admin) {
-        return adminService.registerAdmin(admin);
+    public ResponseEntity<?> signup(@RequestBody SignupRequest signupRequest) {
+        try {
+            adminService.registerAdmin(signupRequest);
+            return ResponseEntity.ok("Sign up successful");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

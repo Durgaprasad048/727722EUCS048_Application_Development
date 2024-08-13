@@ -26,7 +26,7 @@ public class AuthService {
         UserRoleEnum role = UserRoleEnum.USER;
         
         // Check if the user should be an admin
-        if (registerRequest.getEmail().equals("leo@gmail.com") && registerRequest.getPassword().equals("456")) {
+        if (registerRequest.getEmail().equals("dhanush@gmail.com") && registerRequest.getPassword().equals("Test@123")) {
             role = UserRoleEnum.ADMIN;
         }
 

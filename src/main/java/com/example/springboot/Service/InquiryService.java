@@ -6,13 +6,28 @@ import org.springframework.stereotype.Service;
 import com.example.springboot.Entity.Inquiry;
 import com.example.springboot.Repository.InquiryRepository;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class InquiryService {
 
     @Autowired
     private InquiryRepository inquiryRepository;
 
-    public Inquiry saveInquiry(Inquiry inquiry) {
-        return inquiryRepository.save(inquiry);
+    public void saveInquiry(Inquiry inquiry) {
+        inquiryRepository.save(inquiry);
+    }
+
+    public List<Inquiry> getAllInquiries() {
+        return inquiryRepository.findAll();
+    }
+
+    public Optional<Inquiry> getInquiryById(Long id) {
+        return inquiryRepository.findById(id);
+    }
+
+    public void deleteInquiry(Long id) {
+        inquiryRepository.deleteById(id);
     }
 }
