@@ -1,101 +1,85 @@
 import React, { useState } from 'react';
-import './AdmissionForm.css';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
-const AdmissionForm = () => {
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        phone: '',
-        address: '',
-        city: '',
-        state: '',
-        zip: '',
-        dob: ''
-    });
-    const [submitted, setSubmitted] = useState(false);
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        
-        setTimeout(() => {
-            setSubmitted(true);
-        }, 1000);
-    };
-
-    return (
-        <div className="container">
-            <div className="row justify-content-center">
-                <div className="col-md-6">
-                    {!submitted ? (
-                        <form onSubmit={handleSubmit}>
-                            <center>
-                            <h1>Online registeration</h1>
-                            </center>
-                            <div className="mb-3">
-                                <label htmlFor="name" className="form-label">Name:</label>
-                                <input type="text" className="form-control" id="name" name="name" value={formData.name} onChange={handleChange} required />
-                            </div>
-                            <div className="mb-3">
-                                <label htmlFor="email" className="form-label">Email:</label>
-                                <input type="email" className="form-control" id="email" name="email" value={formData.email} onChange={handleChange} required />
-                            </div>
-                            <div className="mb-3">
-                                <label htmlFor="phone" className="form-label">Phone:</label>
-                                <input type="text" className="form-control" id="phone" name="phone" value={formData.phone} onChange={handleChange} required />
-                            </div>
-                            <div className="mb-3">
-                                <label htmlFor="address" className="form-label">Address:</label>
-                                <input type="text" className="form-control" id="address" name="address" value={formData.address} onChange={handleChange} required />
-                            </div>
-                            <div className="row">
-                                <div className="col-md-6">
-                                    <div className="mb-3">
-                                        <label htmlFor="city" className="form-label">City:</label>
-                                        <input type="text" className="form-control" id="city" name="city" value={formData.city} onChange={handleChange} required />
-                                    </div>
-                                </div>
-                                <div className="col-md-3">
-                                    <div className="mb-3">
-                                        <label htmlFor="state" className="form-label">State:</label>
-                                        <input type="text" className="form-control" id="state" name="state" value={formData.state} onChange={handleChange} required />
-                                    </div>
-                                </div>
-                                <div className="col-md-3">
-                                    <div className="mb-3">
-                                        <label htmlFor="zip" className="form-label">Zip:</label>
-                                        <input type="text" className="form-control" id="zip" name="zip" value={formData.zip} onChange={handleChange} required />
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="mb-3">
-                                <label htmlFor="dob" className="form-label">Date of Birth:</label>
-                                <input type="date" className="form-control" id="dob" name="dob" value={formData.dob} onChange={handleChange} required />
-                            </div>
-                            <div>
-                                <center>
-                            <button type="submit" className="btn btn-primary">Submit</button>
-                            </center>
-                            </div>
-                        </form>
-                       
-                    ) : (
-                        <div className="text-center">
-                            <h2>Form Submitted Successfully!</h2>
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQu09m9I8nWEpVG9hsJxOBdSjpeouW5JrAvxiNFVzGqZw6R9L4i24lp944mHZ5O88FkE2U&usqp=CAU" alt="Submitted GIF" />
-                        </div>
-                    )}
-                </div>
-            </div>
-        </div>
-    );
+const Result = () => {
+  return (
+    <p className='alert alert-success'>Your inquiry has been successfully submitted.</p>
+  );
 }
 
-export default AdmissionForm;
+const InquirySubmission = () => {
+  const [result, showResult] = useState(false);
+  const [error, setError] = useState(null);
+
+  const sendInquiry = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    try {
+      await axios.post('http://localhost:8080/api/inquiries', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      showResult(true);
+      e.target.reset();
+    } catch (error) {
+      setError('There was a problem submitting your form. Please try again.');
+    }
+    setTimeout(() => {
+      showResult(false);
+    }, 4000);
+  };
+
+  return (
+    <>
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav">
+            <li className="nav-item active">
+              <Link className="nav-link text-light navhover" to="/StatusTracking">Status Tracking</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link text-light navhover" to="/Login">LogOut</Link>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <div className="container h2-ubuntu inquiry-container mt-4">
+        <form method='post' onSubmit={sendInquiry} encType="multipart/form-data">
+          <h1 className='inquiry-heading h2-ubuntu h3-border text-center mb-2'>New Inquiry</h1>
+          {result && <Result />}
+          {error && <div className="alert alert-danger">{error}</div>}
+          <div className="mb-3">
+            <label htmlFor="name" className="form-label">Name</label>
+            <input type="text" name="name" className="form-control" placeholder='Enter Your Name' id="name" required/>
+          </div>
+          <div className="mb-3">
+            <label htmlFor="email" className="form-label">Email</label>
+            <input type="email" name='email' className="form-control" placeholder='Enter Your Email' id="email" required/>
+          </div>
+          <div className="mb-3">
+            <label htmlFor="subject" className="form-label">Subject</label>
+            <input type="text" name='subject' className="form-control" placeholder='Enter Subject' id="subject" required/>
+          </div>
+          <div className="mb-3">
+            <label htmlFor="message" className="form-label">Message</label>
+            <textarea name='message' className="form-control" rows={8} placeholder="Enter Your Message Here" id="message" required/>
+          </div>
+          <div className="mb-3">
+            <label htmlFor="attachment" className="form-label">Attachment</label>
+            <input type="file" name="attachment" className="form-control" id="attachment" />
+          </div>
+          <div className="d-grid gap-2 mt-4">
+            <button type="submit" name='submit' className="btn btn-primary mb-4">Submit</button>
+          </div>
+        </form>
+      </div>
+    </>
+  );
+}
+
+export default InquirySubmission;

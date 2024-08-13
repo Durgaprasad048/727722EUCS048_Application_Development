@@ -23,7 +23,7 @@ const Navbar = () => {
                             <li className="nav-item">
                                 <Link className="nav-link text-light navhover" to="/Home/academics">Academics</Link>
                             </li>
-                            <li className="nav-item dropdown">
+                            {/* <li className="nav-item dropdown">
                                 <Link className="nav-link text-light navhover dropdown-toggle" to="/" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Admission
                                 </Link>
@@ -36,7 +36,7 @@ const Navbar = () => {
                                     <li><hr className="dropdown-divider" /></li>
                                     <li><Link className="dropdown-item" to="/rules">Rules Of Admission</Link></li>
                                 </ul>
-                            </li>
+                            </li> */}
                             <li className="nav-item">
                                 <Link className="nav-link text-light navhover" to="/Studentreport">Student Reports</Link>
                             </li>

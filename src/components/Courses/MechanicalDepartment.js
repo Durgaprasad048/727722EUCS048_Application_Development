@@ -40,7 +40,7 @@ const Mechanical = () => {
                     
                     
 
-                    <img className='rounded mb-3 mx-auto d-block img-fluid' src='Images/Courses/diesel-img.png' alt="Mechanical Engineering" />
+                    <img className='rounded mb-3 mx-auto d-block img-fluid' src='https://icc.edu/wp-content/uploads/2022/07/mechanical-engineering-tech-print-reading-2022.jpg' alt="Mechanical Engineering" />
                     <h5 className='text-center'>SECTOR – ENGINEERING</h5>
                 </div>
                 <h3 className='text-center h3-border mb-4'>Course Information:</h3>

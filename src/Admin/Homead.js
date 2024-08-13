@@ -70,6 +70,9 @@ const Homead = () => {
                             <li className="nav-item">
                                 <Link className="nav-link text-light" style={styles.navHover} to="/adminsetting">Priority Setting</Link>
                             </li>
+                            <li className="nav-item">
+                                <Link className="nav-link text-light" style={styles.navHover} to="/Addstudent">Add Student</Link>
+                            </li>
                         </ul>
                         <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                             <li className="nav-item">

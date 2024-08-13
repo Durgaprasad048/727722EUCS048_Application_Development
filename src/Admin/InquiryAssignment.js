@@ -1,26 +1,26 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './InquiryAssignment.css';
-
-
-const sampleInquiries = [
-    { id: 1, name: 'Alice Johnson', inquiry: 'Request for product information.', date: '2024-07-28', assignedTo: 'Not Assigned' },
-    { id: 2, name: 'Bob Brown', inquiry: 'Issue with recent order.', date: '2024-07-29', assignedTo: 'Not Assigned' },
-];
-
 
 const sampleAssignments = [
     'Admin',
     'Support Team',
     'Staff',
-    'Scholarship'
+    'Scholarship'   
 ];
 
 const InquiryAssignment = () => {
-    const [inquiries, setInquiries] = useState(sampleInquiries);
+    const [inquiries, setInquiries] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedInquiry, setSelectedInquiry] = useState(null);
     const [form, setForm] = useState({ assignedTo: '' });
+
+    // Fetch inquiries from the database when the component mounts
+    useEffect(() => {
+        axios.get('http://localhost:8080/api/inquiries')
+            .then(response => setInquiries(response.data))
+            .catch(error => console.error('Error fetching inquiries:', error));
+    }, []);
 
     const handleSearch = (e) => {
         setSearchTerm(e.target.value);
@@ -34,12 +34,16 @@ const InquiryAssignment = () => {
     const handleFormSubmit = (e) => {
         e.preventDefault();
         if (selectedInquiry) {
-            setInquiries(inquiries.map(inquiry =>
-                inquiry.id === selectedInquiry.id ? { ...inquiry, assignedTo: form.assignedTo } : inquiry
-            ));
+            axios.put(`/api/inquiries/${selectedInquiry.id}/assign`, { assignedTo: form.assignedTo })
+                .then(response => {
+                    setInquiries(inquiries.map(inquiry =>
+                        inquiry.id === selectedInquiry.id ? { ...inquiry, assignedTo: response.data.assignedTo } : inquiry
+                    ));
+                    setForm({ assignedTo: '' });
+                    setSelectedInquiry(null);
+                })
+                .catch(error => console.error('Error assigning inquiry:', error));
         }
-        setForm({ assignedTo: '' });
-        setSelectedInquiry(null);
     };
 
     const handleEdit = (inquiry) => {
@@ -79,7 +83,7 @@ const InquiryAssignment = () => {
                                 <td>{inquiry.name}</td>
                                 <td>{inquiry.inquiry}</td>
                                 <td>{inquiry.date}</td>
-                                <td>{inquiry.assignedTo}</td>
+                                <td>{inquiry.assignedTo || 'Not Assigned'}</td>
                                 <td>
                                     <button onClick={() => handleEdit(inquiry)} className="edit-button">Assign</button>
                                 </td>
@@ -113,6 +117,6 @@ const InquiryAssignment = () => {
             )}
         </div>
     );
-}
+};
 
 export default InquiryAssignment;

@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import '../SignUp.css';
 
-const SignUp = () => {
-  const navigate = useNavigate();
+const Addstudent = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [termsAccepted, setTermsAccepted] = useState(false);
+  const [successMessage, setSuccessMessage] = useState(''); // State for success message
 
   const validatePassword = (password) => {
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/;
@@ -47,8 +45,7 @@ const SignUp = () => {
       });
 
       if (response.ok) {
-        console.log('Sign up successful');
-        navigate('/Home');
+        setSuccessMessage('Sign up successful!'); // Set success message
       } else {
         const data = await response.json();
         alert(data.message || 'Sign up failed');
@@ -62,9 +59,7 @@ const SignUp = () => {
     <div className="loginsignup">
       <div className="login-signup-container">
         <h1>Welcome</h1>
-        <p className="loginsignup-">
-          Are you an admin? <Link to="/admin-signup"><span>Register here</span></Link>
-        </p>
+        
         <div className="loginsignup-fields">
           <input type="text" placeholder="First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
           <input type="text" placeholder="Last Name" value={lastName} onChange={(e) => setLastName(e.target.value)} />
@@ -76,12 +71,11 @@ const SignUp = () => {
           <input type="checkbox" checked={termsAccepted} onChange={() => setTermsAccepted(!termsAccepted)} />
           <p>By continuing, I agree to the terms of use & privacy policy</p>
         </div>
-        <button onClick={handleSignUp}>Sign Up</button>
-        <p>Or</p>
-        <button onClick={() => navigate('/Login')}>Login</button>
+        <button onClick={handleSignUp}>Register</button>
+        {successMessage && <p className="success-message">{successMessage}</p>} {/* Display success message */}
       </div>
     </div>
   );
 };
 
-export default SignUp;
+export default Addstudent;

@@ -1,19 +1,19 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './PrioritySetting.css';
 
-
-const sampleInquiries = [
-    { id: 1, name: 'John Doe', inquiry: 'Admission process query.', priority: 'Medium', date: '2024-07-25' },
-    { id: 2, name: 'Jane Smith', inquiry: 'Course prerequisites question.', priority: 'High', date: '2024-07-26' },
-];
-
 const PrioritySetting = () => {
-    const [inquiries, setInquiries] = useState(sampleInquiries);
+    const [inquiries, setInquiries] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedInquiry, setSelectedInquiry] = useState(null);
     const [form, setForm] = useState({ name: '', inquiry: '', priority: '', date: '' });
 
+    // Fetch inquiries from the database when the component mounts
+    useEffect(() => {
+        axios.get('http://localhost:8080/api/inquiries')
+            .then(response => setInquiries(response.data))
+            .catch(error => console.error('Error fetching inquiries:', error));
+    }, []);
 
     const handleSearch = (e) => {
         setSearchTerm(e.target.value);
@@ -26,17 +26,27 @@ const PrioritySetting = () => {
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
+
         if (selectedInquiry) {
- 
-            setInquiries(inquiries.map(inc =>
-                inc.id === selectedInquiry.id ? { ...inc, ...form } : inc
-            ));
+            // Update an existing inquiry
+            axios.put(`http://localhost:8080/api/inquiries/${selectedInquiry.id}`, form)
+                .then(response => {
+                    setInquiries(inquiries.map(inc =>
+                        inc.id === selectedInquiry.id ? response.data : inc
+                    ));
+                    setForm({ name: '', inquiry: '', priority: '', date: '' });
+                    setSelectedInquiry(null);
+                })
+                .catch(error => console.error('Error updating inquiry:', error));
         } else {
- 
-            setInquiries([...inquiries, { ...form, id: inquiries.length + 1 }]);
+            // Add a new inquiry
+            axios.post('http://localhost:8080/api/inquiries', form)
+                .then(response => {
+                    setInquiries([...inquiries, response.data]);
+                    setForm({ name: '', inquiry: '', priority: '', date: '' });
+                })
+                .catch(error => console.error('Error adding inquiry:', error));
         }
-        setForm({ name: '', inquiry: '', priority: '', date: '' });
-        setSelectedInquiry(null);
     };
 
     const handleEdit = (inquiry) => {
@@ -45,7 +55,11 @@ const PrioritySetting = () => {
     };
 
     const handleDelete = (id) => {
-        setInquiries(inquiries.filter(inquiry => inquiry.id !== id));
+        axios.delete(`http://localhost:8080/api/inquiries/${id}`)
+            .then(() => {
+                setInquiries(inquiries.filter(inquiry => inquiry.id !== id));
+            })
+            .catch(error => console.error('Error deleting inquiry:', error));
     };
 
     return (
@@ -145,6 +159,6 @@ const PrioritySetting = () => {
             </form>
         </div>
     );
-}
+};
 
 export default PrioritySetting;

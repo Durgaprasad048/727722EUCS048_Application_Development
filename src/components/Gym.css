@@ -1,12 +1,13 @@
 .gym-container {
     padding: 20px;
-    background-color: #444343;
+    background-color: #e9e4e4;
   }
   
   .gym-image {
-    width: 100%;
-    height: 400px;
+    width: 80%;
+    height:auto;
     margin-bottom: 20px;
+    padding-right: 50px;
   }
   
   .gym-info {

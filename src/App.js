@@ -37,8 +37,9 @@ import Homead from "./Admin/Homead";
 import ResponseManagement from "./Admin/InquiriesManagement";
 import InquiryAssignment from "./Admin/InquiryAssignment";
 import PrioritySetting from "./Admin/PrioritySetting";
-import AdminDashboard from "./Admin/AdminDash";
+import AdminDashboard from "./Admin/AdminDashboard";
 import StatusTracking from "./StausTracking";
+import Addstudent from "./Admin/AddStudents";
 
 
 function App() {
@@ -99,7 +100,7 @@ function App() {
           <Route path='/adminsetting' element={<PrioritySetting/>}/>
           <Route path='/AdminDashboard' element={<AdminDashboard/>}/>
           <Route path='/StatusTracking' element={<StatusTracking/>}/>
-       
+          <Route path='/addstudent' element={<Addstudent/>}/>
         </Routes>
         
       </Router>

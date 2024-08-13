@@ -43,6 +43,8 @@ const CivilDepartment = () => {
                     
                     
                 </div>
+                <img className='rounded mb-3 mx-auto d-block img-fluid' src='https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://images.ctfassets.net/wp1lcwdav1p1/3GgkKundG6WGpPHOPFBdDq/7cba9177de38af6c6fd9f30b7d377a91/Construction-workers-and-architect-looking-at-blueprints-on-construction-site-514311930_5413x3609__1_.jpeg?w=1500&h=680&q=60&fit=fill&f=faces&fm=jpg&fl=progressive&auto=format%2Ccompress&dpr=1&w=1000' alt="Mechanical Engineering" />
+
                 <h3 className='text-center h3-border mb-4'>Course Information:</h3>
                 <p className='text-indent'>The Civil Engineering course covers a wide range of topics including structural design, surveying, construction management, and project planning. Candidates are trained in professional skills and knowledge essential for a career in the civil engineering field.</p>
                 <p className='text-indent'>The course curriculum includes building materials, structural analysis, construction techniques, and project management principles. Candidates also undertake projects and practical exercises to enhance their skills.</p>

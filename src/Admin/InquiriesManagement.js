@@ -1,18 +1,34 @@
-
-import React, { useState } from 'react'; 
-import './InquiriesManagement.css'
-
-
-const sampleResponses = [
-    { id: 1, name: 'John Doe', response: 'Inquiry about admission process.', date: '2024-07-25' },
-    { id: 2, name: 'Jane Smith', response: 'Question about course prerequisites.', date: '2024-07-26' },
-];
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import '../Admin/InquiriesManagement';
 
 const ResponseManagement = () => {
-    const [responses, setResponses] = useState(sampleResponses);
+    const [inquiries, setInquiries] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
-    const [selectedResponse, setSelectedResponse] = useState(null);
-    const [form, setForm] = useState({ name: '', response: '', date: '' });
+    const [selectedInquiry, setSelectedInquiry] = useState(null);
+    const [form, setForm] = useState({
+        name: '',
+        email: '',
+        subject: '',
+        message: '',
+        status: '',
+        priority: '',
+        staffName: '',
+        attachment: null
+    });
+
+    useEffect(() => {
+        fetchInquiries();
+    }, []);
+
+    const fetchInquiries = async () => {
+        try {
+            const result = await axios.get('http://localhost:8080/api/inquiries');
+            setInquiries(result.data);
+        } catch (error) {
+            console.error('Failed to fetch inquiries', error);
+        }
+    };
 
     const handleSearch = (e) => {
         setSearchTerm(e.target.value);
@@ -23,106 +39,207 @@ const ResponseManagement = () => {
         setForm({ ...form, [name]: value });
     };
 
-    const handleFormSubmit = (e) => {
+    const handleFileChange = (e) => {
+        setForm({ ...form, attachment: e.target.files[0] });
+    };
+
+    const handleFormSubmit = async (e) => {
         e.preventDefault();
-        if (selectedResponse) {
-           
-            setResponses(responses.map(resp =>
-                resp.id === selectedResponse.id ? { ...resp, ...form } : resp
-            ));
-        } else {
-          
-            setResponses([...responses, { ...form, id: responses.length + 1 }]);
+        const formData = new FormData();
+        for (const key in form) {
+            formData.append(key, form[key]);
         }
-        setForm({ name: '', response: '', date: '' });
-        setSelectedResponse(null);
+
+        try {
+            if (selectedInquiry) {
+                // Update existing inquiry
+                await axios.put(`http://localhost:8080/api/inquiries/${selectedInquiry.id}`, formData, {
+                    headers: { 'Content-Type': 'multipart/form-data' }
+                });
+            } else {
+                // Add new inquiry
+                await axios.post('http://localhost:8080/api/inquiries', formData, {
+                    headers: { 'Content-Type': 'multipart/form-data' }
+                });
+            }
+            fetchInquiries(); // Refresh inquiries
+            setForm({
+                name: '',
+                email: '',
+                subject: '',
+                message: '',
+                status: '',
+                priority: '',
+                staffName: '',
+                attachment: null
+            });
+            setSelectedInquiry(null);
+        } catch (error) {
+            console.error('Failed to submit form', error);
+        }
     };
 
-    const handleEdit = (response) => {
-        setForm(response);
-        setSelectedResponse(response);
+    const handleEdit = (inquiry) => {
+        setForm({
+            name: inquiry.name,
+            email: inquiry.email,
+            subject: inquiry.subject,
+            message: inquiry.message,
+            status: inquiry.status,
+            priority: inquiry.priority,
+            staffName: inquiry.staffName,
+            attachment: null
+        });
+        setSelectedInquiry(inquiry);
     };
 
-    const handleDelete = (id) => {
-        setResponses(responses.filter(response => response.id !== id));
+    const handleDelete = async (id) => {
+        try {
+            await axios.delete(`http://localhost:8080/api/inquiries/${id}`);
+            fetchInquiries(); // Refresh inquiries
+        } catch (error) {
+            console.error('Failed to delete inquiry', error);
+        }
     };
 
     return (
         <div className="response-management-container">
-            <h1>Response Management</h1>
+            <h1 className="response-management-title">Inquiry Management</h1>
             
             <input
                 type="text"
-                placeholder="Search responses..."
+                placeholder="Search inquiries..."
                 value={searchTerm}
                 onChange={handleSearch}
-                style={{ marginBottom: '20px', padding: '10px', width: '100%' }}
+                className="response-management-search-input"
             />
             
-            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <table className="response-management-table">
                 <thead>
                     <tr>
-                        <th style={{ border: '1px solid #ddd', padding: '8px' }}>ID</th>
-                        <th style={{ border: '1px solid #ddd', padding: '8px' }}>Name</th>
-                        <th style={{ border: '1px solid #ddd', padding: '8px' }}>Response</th>
-                        <th style={{ border: '1px solid #ddd', padding: '8px' }}>Date</th>
-                        <th style={{ border: '1px solid #ddd', padding: '8px' }}>Actions</th>
+                        <th className="response-management-table-header">ID</th>
+                        <th className="response-management-table-header">Name</th>
+                        <th className="response-management-table-header">Subject</th>
+                        <th className="response-management-table-header">Status</th>
+                        <th className="response-management-table-header">Priority</th>
+                        <th className="response-management-table-header">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {responses
-                        .filter(resp => resp.name.toLowerCase().includes(searchTerm.toLowerCase()))
-                        .map((resp) => (
-                            <tr key={resp.id}>
-                                <td style={{ border: '1px solid #ddd', padding: '8px' }}>{resp.id}</td>
-                                <td style={{ border: '1px solid #ddd', padding: '8px' }}>{resp.name}</td>
-                                <td style={{ border: '1px solid #ddd', padding: '8px' }}>{resp.response}</td>
-                                <td style={{ border: '1px solid #ddd', padding: '8px' }}>{resp.date}</td>
-                                <td style={{ border: '1px solid #ddd', padding: '8px' }}>
-                                    <button onClick={() => handleEdit(resp)} className="edit-button">Edit</button>
-                                    <button onClick={() => handleDelete(resp.id)} className="delete-button" style={{ marginLeft: '10px' }}>Delete</button>
+                    {inquiries
+                        .filter(inquiry => inquiry.name.toLowerCase().includes(searchTerm.toLowerCase()))
+                        .map((inquiry) => (
+                            <tr key={inquiry.id}>
+                                <td className="response-management-table-cell">{inquiry.id}</td>
+                                <td className="response-management-table-cell">{inquiry.name}</td>
+                                <td className="response-management-table-cell">{inquiry.subject}</td>
+                                <td className="response-management-table-cell">{inquiry.status}</td>
+                                <td className="response-management-table-cell">{inquiry.priority}</td>
+                                <td className="response-management-table-cell">
+                                    <button onClick={() => handleEdit(inquiry)} className="response-management-edit-button">Edit</button>
+                                    <button onClick={() => handleDelete(inquiry.id)} className="response-management-delete-button">Delete</button>
                                 </td>
                             </tr>
                         ))}
                 </tbody>
             </table>
 
-            <div className="form-container">
-                <h2>{selectedResponse ? 'Edit Response' : 'Add New Response'}</h2>
-                <form onSubmit={handleFormSubmit}>
-                    <label>
+            <div className="response-management-form-container">
+                <h2 className="response-management-form-title">{selectedInquiry ? 'Edit Inquiry' : 'Add New Inquiry'}</h2>
+                <form onSubmit={handleFormSubmit} className="response-management-form">
+                    <label className="response-management-form-label">
                         Name:
                         <input
                             type="text"
                             name="name"
                             value={form.name}
                             onChange={handleFormChange}
+                            className="response-management-form-input"
                             required
                         />
                     </label>
                     <br />
-                    <label>
-                        Response:
-                        <textarea
-                            name="response"
-                            value={form.response}
-                            onChange={handleFormChange}
-                            required
-                        />
-                    </label>
-                    <br />
-                    <label>
-                        Date:
+                    <label className="response-management-form-label">
+                        Email:
                         <input
-                            type="date"
-                            name="date"
-                            value={form.date}
+                            type="email"
+                            name="email"
+                            value={form.email}
                             onChange={handleFormChange}
+                            className="response-management-form-input"
                             required
                         />
                     </label>
                     <br />
-                    <button type="submit">{selectedResponse ? 'Update Response' : 'Add Response'}</button>
+                    <label className="response-management-form-label">
+                        Subject:
+                        <input
+                            type="text"
+                            name="subject"
+                            value={form.subject}
+                            onChange={handleFormChange}
+                            className="response-management-form-input"
+                            required
+                        />
+                    </label>
+                    <br />
+                    <label className="response-management-form-label">
+                        Message:
+                        <textarea
+                            name="message"
+                            value={form.message}
+                            onChange={handleFormChange}
+                            className="response-management-form-textarea"
+                            required
+                        />
+                    </label>
+                    <br />
+                    <label className="response-management-form-label">
+                        Status:
+                        <input
+                            type="text"
+                            name="status"
+                            value={form.status}
+                            onChange={handleFormChange}
+                            className="response-management-form-input"
+                        />
+                    </label>
+                    <br />
+                    <label className="response-management-form-label">
+                        Priority:
+                        <input
+                            type="text"
+                            name="priority"
+                            value={form.priority}
+                            onChange={handleFormChange}
+                            className="response-management-form-input"
+                        />
+                    </label>
+                    <br />
+                    <label className="response-management-form-label">
+                        Staff Name:
+                        <input
+                            type="text"
+                            name="staffName"
+                            value={form.staffName}
+                            onChange={handleFormChange}
+                            className="response-management-form-input"
+                        />
+                    </label>
+                    <br />
+                    <label className="response-management-form-label">
+                        Attachment:
+                        <input
+                            type="file"
+                            name="attachment"
+                            onChange={handleFileChange}
+                            className="response-management-form-file"
+                        />
+                    </label>
+                    <br />
+                    <button type="submit" className="response-management-submit-button">
+                        {selectedInquiry ? 'Update Inquiry' : 'Add Inquiry'}
+                    </button>
                 </form>
             </div>
         </div>

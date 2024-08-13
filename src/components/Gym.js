@@ -6,7 +6,7 @@ const Gym = () => {
     return (
         <div className="gym-container">
             <h1>Welcome to Our Gym</h1>
-            <img src="https://www.davidlloyd.co.uk/cms/images/softwire-david-lloyd/image/upload/f_auto/v1/Gym/glhf19k2agnqjhzbzwb5.jpg" alt="Gym" className="gym-image" />
+            <img src="https://images.healthshots.com/healthshots/en/uploads/2023/06/10230401/gym-1600x900.jpg" alt="Gym" className="gym-image" />
             <div className="gym-info">
                 <p>
                     The gym is a facility designed for physical exercise and fitness activities. It typically contains equipment such as treadmills, weightlifting machines, free weights, and exercise bikes. Gyms offer a variety of services and amenities to help individuals achieve their fitness goals.

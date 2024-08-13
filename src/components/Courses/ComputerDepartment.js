@@ -35,7 +35,8 @@ const ComputerDepartment = () => {
                     </tbody>
                 </table>
                 {/* Information */}
-                
+                <img className='rounded mb-3 mx-auto d-block img-fluid' src='https://thumbor.forbes.com/thumbor/fit-in/900x510/https://www.forbes.com/advisor/wp-content/uploads/2022/10/computer_engineer-compare-page.jpg' alt="Mechanical Engineering" />
+
                 <h3 className='text-center h3-border mb-4'>Course Information:</h3>
                 <p className='text-indent'>The Computer Engineering course covers a wide range of topics including programming, software development, networking, and database management. Candidates are trained in professional skills and knowledge essential for a career in the computer science field.</p>
                 <p className='text-indent'>The course curriculum includes programming languages, software development methodologies, database design, and network administration. Candidates also undertake projects and practical exercises to enhance their skills.</p>

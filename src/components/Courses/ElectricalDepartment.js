@@ -38,7 +38,8 @@ const ElectricalDepartment = () => {
 
                    
 
-                    
+                <img className='rounded mb-3 mx-auto d-block img-fluid' src='https://www.aksuniversity.ac.in/sites/default/files/2024-04/btechinelectricalengineering.jpg' alt="Mechanical Engineering" />
+
                 <h3 className='text-center h3-border mb-4'>Course Information:</h3>
                 <p className='text-indent'>The Electrical Engineering course covers a wide range of topics including electrical systems, circuits, machines, and applications. Candidates are trained in professional skills and knowledge essential for a career in the electrical engineering field.</p>
                 <p className='text-indent'>The course curriculum includes safety procedures, electrical components, wiring techniques, troubleshooting methods, and practical applications of electrical principles. Candidates also undertake projects and practical exercises to enhance their skills.</p>
